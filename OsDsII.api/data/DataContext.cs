@@ -13,33 +13,21 @@ namespace OsDsII.api.Data
         public DbSet<Comment> Comments { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Customer>()
-                .HasIndex(customer => customer.Email)
-                .IsUnique();
 
-            modelBuilder.Entity<ServiceOrder>()
-                .HasOne(entity => entity.Customer)
-                .WithMany(c => c.ServiceOrders)
-                .IsRequired();
+            modelBuilder.Entity<Customer>().ToTable("Customer");
+            modelBuilder.Entity<Customer>().HasKey();
+            modelBuilder.Entity<Customer>().HasIndex(c => c.Email).IsUnique();
+            modelBuilder.Entity<Customer>().Property(c => c.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<Customer>().Property(c => c.Name).HasMaxLength(60);
+            modelBuilder.Entity<Customer>().Property(c => c.Email).HasMaxLength(255);
+            modelBuilder.Entity<Customer>().Property(c => c.Phone).HasMaxLength(20);
 
-            modelBuilder.Entity<ServiceOrder>()
-                .HasMany(service => service.Comments)
-                .WithOne(e => e.ServiceOrder)
-                .HasForeignKey(entity => entity.ServiceOrderId)
-                .IsRequired();
-
-            modelBuilder.Entity<ServiceOrder>()
-                .Property(serviceOrder => serviceOrder.Status)
-                .HasConversion(new EnumToStringConverter<StatusServiceOrder>());
+            modelBuilder.Entity<ServiceOrder>().ToTable("service_order");
+            modelBuilder.Entity<ServiceOrder>().HasKey(s => s.Id);
+            modelBuilder.Entity<ServiceOrder>().Property(s => s.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<ServiceOrder>().Property(s => s.Description).HasMaxLength(255);
 
 
-            modelBuilder.Entity<ServiceOrder>()
-                .Property(serviceOrder => serviceOrder.FinishDate)
-                .HasDefaultValue(null);
-
-            modelBuilder.Entity<ServiceOrder>()
-                .Property(serviceOrder => serviceOrder.OpeningDate)
-                .HasDefaultValue(DateTimeOffset.Now);
 
         }
     }
