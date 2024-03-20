@@ -18,17 +18,29 @@ namespace OsDsII.api.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+
         public async Task<IActionResult> GetCommentsAsync(int serviceOrderId)
         {
+            try { 
             ServiceOrder serviceOrderWithComments = await _context.ServiceOrders
                 .Include(c => c.Customer)
                 .Include(c => c.Comments)
                 .FirstOrDefaultAsync(s => s.Id == serviceOrderId);
             return Ok(serviceOrderWithComments);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
 
         }
 
         [HttpPost]
+
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+
         public async Task<IActionResult> AddComment(int serviceOrderId, Comment comment)
         {
             try
@@ -49,7 +61,7 @@ namespace OsDsII.api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
 
