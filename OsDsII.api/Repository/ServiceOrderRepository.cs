@@ -8,8 +8,6 @@ namespace OsDsII.api.Repository
     public class ServiceOrderRepository : IServiceOrderRepository
     {
 
-
-
         private readonly DataContext _dataContext;
 
         public ServiceOrderRepository(DataContext dataContext)
