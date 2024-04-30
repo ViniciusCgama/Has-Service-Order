@@ -6,11 +6,11 @@ using System.Reflection.Metadata.Ecma335;
 
 namespace OsDsII.api.Repository
 {
-    public class CustomerRepository
+    public class CustomersRepository
     {
         private readonly DataContext _datacontext;
 
-        public CustomerRepository(DataContext datacontext)
+        public CustomersRepository(DataContext datacontext)
         {
             _datacontext = datacontext;
         }

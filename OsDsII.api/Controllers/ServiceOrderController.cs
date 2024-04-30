@@ -10,11 +10,12 @@ namespace OsDsII.api.Controllers
     [Route("[controller]")]
     public class ServiceOrdersController : ControllerBase
     {
-
+        private readonly DataContext _dataContext;
         private readonly IServiceOrderRepository _serviceOrderRepository;
-        public ServiceOrdersController( IServiceOrderRepository serviceOrderRepository)
+        public ServiceOrdersController( IServiceOrderRepository serviceOrderRepository, DataContext dataContext)
         {
             _serviceOrderRepository = serviceOrderRepository;
+            _dataContext = dataContext;
         }
 
 

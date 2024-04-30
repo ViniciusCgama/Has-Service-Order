@@ -1,3 +1,5 @@
+using OsDsII.api.Dtos;
+
 namespace OsDsII.api.Models
 {
     public class Customer
@@ -54,6 +56,11 @@ namespace OsDsII.api.Models
         public override int GetHashCode()
         {
             return HashCode.Combine(Id, Name, Email, Phone, ServiceOrders);
+        }
+
+        public static implicit operator Customer(CreateCustomerDto v)
+        {
+            throw new NotImplementedException();
         }
     }
 }

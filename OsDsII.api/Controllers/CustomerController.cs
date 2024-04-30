@@ -1,8 +1,13 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OsDsII.api.Data;
+using OsDsII.api.Dtos;
 using OsDsII.api.Models;
+using OsDsII.api.Repository;
+using OsDsII.api.Services.Customers;
+using OsDsII.api.Services.Http.Exceptions;
 
 namespace OsDsII.api.Controllers
 {
@@ -11,9 +16,16 @@ namespace OsDsII.api.Controllers
     public class CustomersController : ControllerBase
     {
         private readonly DataContext _dataContext;
-        public CustomersController(DataContext dataContext)
+        private readonly Mapper _mapper;
+        private readonly ICustomersRepository _customersRepository;
+        private readonly ICustomersService _customersService;
+
+        public CustomersController(DataContext dataContext, Mapper mapper, ICustomersRepository customersRepository, ICustomersService customersService)
         {
             _dataContext = dataContext;
+            _mapper = mapper;
+            _customersRepository = customersRepository;
+            _customersService = customersService;
         }
 
         [HttpGet]
@@ -62,24 +74,17 @@ namespace OsDsII.api.Controllers
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Customer))]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-
-        public async Task<IActionResult> CreateCustomerAsync(Customer customer)
+        public async Task<IActionResult> CreateCustomerAsync(CreateCustomerDto customer)
         {
             try
             {
-                Customer customerExists = await _dataContext.Customers.FirstOrDefaultAsync(c => c.Email == customer.Email);
-                if (customerExists != null && !customerExists.Equals(customer))
-                {
-                    return Conflict("Customer already exists");
-                }
-                await _dataContext.Customers.AddAsync(customer);
-                await _dataContext.SaveChangesAsync();
+                await _customersService.CreateAsync(customer); // assíncrono porém void
 
-                return Created(nameof(customer),customer);
+                return Created(nameof(CustomersController), customer);
             }
-            catch (Exception ex)
+            catch (BaseException ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return ex.GetResponse();
             }
         }
 
@@ -130,5 +135,8 @@ namespace OsDsII.api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
+     
+
     }
 }
