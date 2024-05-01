@@ -25,6 +25,11 @@ namespace OsDsII.api.Repository
             return await _datacontext.Customers.FirstOrDefaultAsync(c => c.Id == id);
         }
 
+        public async Task<Customer> FindUserByEmailAsync(Customer customer)
+        { 
+            return await _datacontext.Customers.FirstOrDefaultAsync(c => c.Email == customer.Email);
+        }
+
         public async Task<Customer> CreateCustomerAsync(Customer customer)
         {
             _datacontext.Customers.Add(customer);

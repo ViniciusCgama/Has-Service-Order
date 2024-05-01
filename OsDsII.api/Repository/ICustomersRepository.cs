@@ -4,11 +4,12 @@ namespace OsDsII.api.Repository
 {
     public interface ICustomersRepository
     {
-        Task<List<Customer>> GetAllascyn();
+        Task<List<Customer>> GetAllCustomersAsync();
         Task<Customer> GetByIdAsync(int id);
-        Task<Customer> CreateCustumerAsync(Customer customer);
-        Task DeleteCustumerAsync(int id);
-        Task UpdateCustumerAsync(Customer customer);
+        Task<Customer> CreateCustomerAsync(Customer customer);
+        Task<Customer> FindUserByEmailAsync(string email);
+        Task DeleteCustomerAsync(int id);
+        Task UpdateCustomerAsync(Customer customer);
         Task AddCustomerAsync(Customer customer);
     }
 }

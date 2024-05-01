@@ -2,8 +2,9 @@
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 using System.Net;
+using OsDsII.api.Services.Http;
 
-namespace OsDsII.api.Services.Http.Exceptions
+namespace OsDsII.api.Services.Exceptions
 {
     public class BaseException : Exception
     {

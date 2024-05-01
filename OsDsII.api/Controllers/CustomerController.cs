@@ -7,7 +7,7 @@ using OsDsII.api.Dtos;
 using OsDsII.api.Models;
 using OsDsII.api.Repository;
 using OsDsII.api.Services.Customers;
-using OsDsII.api.Services.Http.Exceptions;
+using OsDsII.api.Services.Exceptions;
 
 namespace OsDsII.api.Controllers
 {
@@ -34,10 +34,11 @@ namespace OsDsII.api.Controllers
 
         public async Task<IActionResult> GetAllAsync()
         {
-            try {
+            try
+            {
+                await _customersService.GetAllAsync();
 
-                List<Customer> customers = await _dataContext.Customers.ToListAsync();
-                return Ok(customers);
+                return Ok();
             }
             catch (Exception ex)
             {
@@ -57,12 +58,8 @@ namespace OsDsII.api.Controllers
         {
             try
             {
-                Customer customer = await _dataContext.Customers.FirstOrDefaultAsync(c => c.Id == id);
-                if (customer is null)
-                {
-                    return NotFound("Customer not found");
-                }
-                return Ok(customer);
+                await _customersService.GetCustomerAsync(id);
+                return Ok();
             }
             catch (Exception ex)
             {
@@ -97,12 +94,7 @@ namespace OsDsII.api.Controllers
         {
             try
             {
-                Customer customer = await _dataContext.Customers.FirstOrDefaultAsync(c => c.Id == id);
-                if (customer is null)
-                {
-                    return NotFound("Customer not found");
-                }
-                _dataContext.Customers.Remove(customer);
+                await _customersService.DeleteAsync(id);
                 return NoContent();
             }
             catch (Exception ex)
@@ -117,17 +109,13 @@ namespace OsDsII.api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 
 
-        public async Task<IActionResult> UpdateCustomerAsync(Customer customer)
+        public async Task<IActionResult> UpdateCustomerAsync(int id)
         {
             try
             {
-                Customer currentCustomer = await _dataContext.Customers.FirstOrDefaultAsync(c => c.Id == customer.Id);
-                if (customer is null)
-                {
-                    return NotFound("Customer not found");
-                }
-                _dataContext.Customers.Update(customer);
-                await _dataContext.SaveChangesAsync();
+                await _customersService.UpdateAsync(id);
+                
+                
                 return NoContent();
             }
             catch (Exception ex)
