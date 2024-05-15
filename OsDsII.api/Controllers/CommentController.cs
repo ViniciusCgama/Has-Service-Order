@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OsDsII.api.Data;
 using OsDsII.api.Models;
+using OsDsII.api.Services.Comments;
 
 namespace OsDsII.api.Controllers
 {
@@ -11,10 +12,12 @@ namespace OsDsII.api.Controllers
     public class CommentController : ControllerBase
     {
         private readonly DataContext _context;
+        private readonly ICommentService _commentService;
 
-        public CommentController(DataContext context)
+        public CommentController(DataContext context, ICommentService commentService)
         {
             _context = context;
+            _commentService = commentService;
         }
 
         [HttpGet]
@@ -24,11 +27,9 @@ namespace OsDsII.api.Controllers
         public async Task<IActionResult> GetCommentsAsync(int serviceOrderId)
         {
             try { 
-            ServiceOrder serviceOrderWithComments = await _context.ServiceOrders
-                .Include(c => c.Customer)
-                .Include(c => c.Comments)
-                .FirstOrDefaultAsync(s => s.Id == serviceOrderId);
-            return Ok(serviceOrderWithComments);
+                await _commentService.GetCommentAsync(serviceOrderId);
+
+                return Ok();
             }
             catch (Exception ex)
             {
@@ -45,19 +46,9 @@ namespace OsDsII.api.Controllers
         {
             try
             {
-                var os = await _context.ServiceOrders.Include(c => c.Customer).FirstOrDefaultAsync(s => serviceOrderId == s.Id);
+                await _commentService.AddCommentAsync(serviceOrderId);
 
-                if (os == null)
-                {
-                    throw new Exception("ServiceOrder not found.");
-                }
-
-                Comment commentExists = HandleCommentObject(serviceOrderId, comment.Description);
-
-                await _context.Comments.AddAsync(commentExists); // This line adds the comment to the context
-                await _context.SaveChangesAsync();
-
-                return Ok(commentExists);
+                return Ok();
             }
             catch (Exception ex)
             {
@@ -65,15 +56,7 @@ namespace OsDsII.api.Controllers
             }
         }
 
-        private Comment HandleCommentObject(int id, string description)
-        {
-            Comment comment = new Comment
-            {
-                Description = description,
-                ServiceOrderId = id
-            };
-            return comment;
-        }
+        
     }
 }
 

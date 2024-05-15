@@ -72,7 +72,7 @@ namespace OsDsII.api.Services.Customers
 
         }
 
-        public async Task<Customer> GetAllCustomerAsync()
+        public async Task <List<Customer>> GetAllCustomerAsync()
         {
             return await _customersRepository.GetAllCustomersAsync();
         }
