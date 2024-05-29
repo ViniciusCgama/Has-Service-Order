@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OsDsII.api", "OsDsII.api\OsDsII.api.csproj", "{2029EA73-8E50-4179-9122-DFA39B0C8B73}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "has-service-order.Tests", "has-service-order.Tests\has-service-order.Tests.csproj", "{5032C5C2-FB05-4080-BA36-285B6C37D2A9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{2029EA73-8E50-4179-9122-DFA39B0C8B73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2029EA73-8E50-4179-9122-DFA39B0C8B73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2029EA73-8E50-4179-9122-DFA39B0C8B73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5032C5C2-FB05-4080-BA36-285B6C37D2A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5032C5C2-FB05-4080-BA36-285B6C37D2A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5032C5C2-FB05-4080-BA36-285B6C37D2A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5032C5C2-FB05-4080-BA36-285B6C37D2A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

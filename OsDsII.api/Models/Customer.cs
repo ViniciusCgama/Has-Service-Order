@@ -1,4 +1,5 @@
 using OsDsII.api.Dtos;
+using OsDsII.api.Dtos.Customer;
 
 namespace OsDsII.api.Models
 {

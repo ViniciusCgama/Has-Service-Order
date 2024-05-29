@@ -5,10 +5,10 @@ using OsDsII.api.Repository;
 using Microsoft.EntityFrameworkCore;
 using OsDsII.api.Services.Exceptions;
 using OsDsII.api.Data;
-
+using OsDsII.api.Dtos.Customer;
 namespace OsDsII.api.Services.Customers
 {
-    public sealed class CustomersService : ICustomersService
+    public class CustomersService : ICustomersService
     {
         private readonly ICustomersRepository _customersRepository;
         private readonly IMapper _mapper;
