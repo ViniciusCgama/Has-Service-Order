@@ -31,3 +31,4 @@ $ dotnet add ./HasServiceOrder.Api/OsDsII.Api.csproj reference ./HasServiceOrder
 - [ ] Adicionar model mapper
 - [ ] Documentar swagger openapi3.0
 "# Teste-SO" 
+"# Teste-SO" 
