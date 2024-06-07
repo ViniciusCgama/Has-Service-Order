@@ -11,13 +11,17 @@ namespace OsDsII.api.Controllers
     [Route("ServiceOrders/{id}/comment")]
     public class CommentController : ControllerBase
     {
-        private readonly DataContext _context;
+        private readonly DataContext _context; // atributo
         private readonly ICommentService _commentService;
 
-        public CommentController(DataContext context, ICommentService commentService)
+        public CommentController(DataContext context, ICommentService commentService) //construtor
         {
             _context = context;
             _commentService = commentService;
+        }
+
+        public CommentController()
+        {
         }
 
         [HttpGet]
@@ -56,7 +60,10 @@ namespace OsDsII.api.Controllers
             }
         }
 
-        
+        public string GetCommentsAsync(string aaaaa)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

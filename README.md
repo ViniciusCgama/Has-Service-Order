@@ -30,3 +30,4 @@ $ dotnet add ./HasServiceOrder.Api/OsDsII.Api.csproj reference ./HasServiceOrder
 - [ ] Adicionar EF para migrations e seeds
 - [ ] Adicionar model mapper
 - [ ] Documentar swagger openapi3.0
+"# Teste-SO" 

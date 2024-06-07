@@ -20,7 +20,7 @@ namespace OsDsII.api.Services.Customers
         }
 
 
-        public async Task GetCustomerAsync(int id)
+        public async Task<CustomerDto> GetCustomerAsync(int id)
         {
             var customer = await _customersRepository.GetByIdAsync(id);
 
@@ -28,6 +28,9 @@ namespace OsDsII.api.Services.Customers
             {
                 throw new NotFoundException("Customer not found");
             }
+
+            var userDto = _mapper.Map<CustomerDto>(customer);
+            return userDto;
         }
 
         public async Task CreateAsync(CreateCustomerDto customerDto)
